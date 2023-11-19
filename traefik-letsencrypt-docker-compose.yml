@@ -26,7 +26,7 @@ services:
       - "--global.sendAnonymousUsage=false"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - traefik.yml:/traefik.yml:ro
+      - ./traefik.yml:/traefik.yml:ro
       - traefik-certificates:/etc/traefik/acme
     networks:
       - traefik-network
