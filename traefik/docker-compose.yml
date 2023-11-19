@@ -27,7 +27,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 #      - ./traefik.yml:/traefik.yml:ro
-      - /opt/traefik-gitlab/volumes/traefik-certificates:/etc/traefik/acme
+      - ./volumes/traefik-certificates:/etc/traefik/acme
     networks:
       - traefik-network
     ports:
