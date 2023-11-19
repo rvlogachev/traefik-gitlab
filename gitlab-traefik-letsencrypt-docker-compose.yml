@@ -60,7 +60,6 @@
 # Support on BuyMeaCoffee: https://www.buymeacoffee.com/heyValdemar
 # Support on Ko-fi: https://ko-fi.com/heyValdemar
 # Support on PayPal: https://www.paypal.com/paypalme/heyValdemarCOM
-
 networks:
   gitlab-network:
     external: true
@@ -69,6 +68,11 @@ networks:
 
 volumes:
   gitlab-data:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /opt/traefik-gitlab/volumes/gitlab-data
   gitlab-logs:
   gitlab-config:
   gitlab-runner-config:
@@ -158,10 +162,8 @@ services:
       - "traefik.docker.network=traefik-network"
     restart: unless-stopped
     depends_on:
-      postgres:
-        condition: service_healthy
-      traefik:
-        condition: service_healthy
+      - postgres
+      - traefik
 
   gitlab-runner-1:
     image: ${GITLAB_RUNNER_IMAGE_TAG}
