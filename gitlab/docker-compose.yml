@@ -22,10 +22,9 @@ services:
   gitlab:
     image: ${GITLAB_IMAGE_TAG}
     volumes:
-      - gitlab-data:/var/opt/gitlab
+      - ./volumes/gitlab-data:/var/opt/gitlab
       - gitlab-logs:/var/log/gitlab
       - gitlab-config:/etc/gitlab
-    shm_size: "256m"
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url '${GITLAB_URL}'
@@ -84,7 +83,6 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-      - traefik
 
   gitlab-runner-1:
     image: ${GITLAB_RUNNER_IMAGE_TAG}
@@ -101,7 +99,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /opt/traefik-gitlab/volumes/gitlab-data
+      device:
   gitlab-logs:
   gitlab-config:
   gitlab-runner-config:

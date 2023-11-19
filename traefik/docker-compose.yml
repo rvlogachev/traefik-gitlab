@@ -27,7 +27,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
 #      - ./traefik.yml:/traefik.yml:ro
-      - traefik-certificates:/etc/traefik/acme
+      - /opt/traefik-gitlab/volumes/traefik-certificates:/etc/traefik/acme
     networks:
       - traefik-network
     ports:
@@ -55,14 +55,6 @@ services:
       - "traefik.http.routers.http-catchall.entrypoints=web"
       - "traefik.http.routers.http-catchall.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-
-volumes:
-  traefik-certificates:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /opt/traefik-gitlab/volumes/traefik-certificates
 
 networks:
   traefik-network:
